@@ -1,0 +1,20 @@
+{
+  "app": {
+    "name": "Smartadmin"
+  },
+  "nav": {
+    "landing_page": "Beranda",
+    "dashboard_menu": "Dashboard",
+    "dashboard_pemetaan": "Pemetaan",
+    "user_task": "Proses RIPH",
+    "master_data": "Data Master"
+  },
+  "drpdwn": {
+    "reset_layout": "Ulang Tataletak",
+    "settings": "Pengaturan",
+    "fullscreen": "Layar Penuh",
+    "profile": "Profile",
+    "lang": "Bahasa",
+    "page-logout": "Keluar"
+  }  
+}

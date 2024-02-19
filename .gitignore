@@ -1,0 +1,17 @@
+/node_modules
+/public/storage
+/public/storage*
+!/vendor
+!/vendor/laravel/ui/auth-backend
+/vendor
+.env
+.DS_Store
+.env_copy
+resources.zip
+simethris_core.zip
+simethris_public.zip
+database/simethirsstarter.sql
+public/public.zip
+/storage/*
+composer.json
+composer.lock

@@ -1,0 +1,229 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\AjuVerifTanam;
+use App\Models\Lokasi;
+use App\Models\Pks;
+use App\Models\PullRiph;
+use App\Models\UserDocs;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
+
+use Yajra\DataTables\DataTables as DataTablesDataTables;
+use Yajra\DataTables\Facades\DataTables;
+
+class AjuVerifTanamController extends Controller
+{
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index()
+	{
+		$module_name = 'Proses RIPH';
+		$page_title = 'Daftar Pengajuan';
+		$page_heading = 'Daftar Pengajuan';
+		$heading_class = 'fal fa-ballot-check';
+
+		//table pengajuan verifikasi tanam
+		$pengajuans = AjuVerifTanam::where('npwp', Auth::user()->data_user->npwp_company)
+			// ->where('status', '<=', '4')
+			->orderBy('created_at', 'desc')
+			->get();
+
+		$pengajuans = AjuVerifTanam::where('npwp', Auth::user()->data_user->npwp_company)
+			// ->where('status', '!=', '7')
+			->get();
+
+		return view('admin.pengajuan.index', compact('module_name', 'page_title', 'page_heading', 'heading_class', 'pengajuans'));
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create($id)
+	{
+		$module_name = 'Komitmen';
+		$page_title = 'Pengajuan Verifikasi Tanam';
+		$page_heading = 'Pengajuan Verifikasi Tanam';
+		$heading_class = 'fal fa-file-invoice';
+
+		$npwp_company = Auth::user()->data_user->npwp_company;
+		$commitment = PullRiph::where('npwp', $npwp_company)
+			->findOrFail($id);
+
+		$total_luastanam = $commitment->lokasi->sum('luas_tanam');
+		$total_volume = $commitment->lokasi->sum('volume');
+
+		$pks = Pks::where('no_ijin', $commitment->no_ijin)->get();
+		$countPoktan = $pks->count();
+		$countPks = $pks->where('berkas_pks', '!=', null)->count();
+
+
+		// $lokasi = AnggotaRiph::where('no_ijin', $commitment->no_ijin);
+
+		if (request()->ajax()) {
+			$lokasis = Lokasi::join('master_poktans', 'lokasis.poktan_id', '=', 'master_poktans.poktan_id')
+				->join('master_anggotas', 'lokasis.anggota_id', '=', 'master_anggotas.anggota_id')
+				->join('pks', 'lokasis.poktan_id', '=', 'pks.poktan_id')
+				->where('lokasis.npwp', $npwp_company)
+				->where('lokasis.no_ijin', $commitment->no_ijin)
+				// ->where(function ($query) {
+				// 	$query->whereNotNull('poktan_riphs.no_perjanjian')
+				// 		->whereNotNull('poktan_riphs.berkas_pks');
+				// })
+				->orderBy('lokasis.poktan_id', 'asc')
+				->select(
+					sprintf('%s.*', (new Lokasi())->getTable()),
+					'master_poktans.nama_kelompok as nama_kelompok',
+					'master_anggotas.nama_petani as nama_petani'
+				);
+
+			$table = DataTables::of($lokasis);
+
+			$table->addColumn('data_geolokasi', function ($row) {
+				$nullCount = 0;
+				$nulledColumns = [];
+
+				if (empty($row->latitude)) {
+					$nullCount++;
+					$nulledColumns[] = 'lat?';
+				}
+				if (empty($row->longitude)) {
+					$nullCount++;
+					$nulledColumns[] = 'long?';
+				}
+				if (empty($row->polygon)) {
+					$nullCount++;
+					$nulledColumns[] = 'poly?';
+				}
+				if (empty($row->altitude)) {
+					$nullCount++;
+					$nulledColumns[] = 'alt?';
+				}
+
+				if ($nullCount === 4) {
+					return '<span class="badge badge-xs badge-danger">Tidak Ada</span>';
+				} elseif ($nullCount > 0) {
+					$nulledColumnsHtml = '';
+					foreach ($nulledColumns as $column) {
+						$nulledColumnsHtml .= '<span class="badge badge-xs badge-warning">' . $column . '</span> ';
+					}
+					return $nulledColumnsHtml;
+				} else {
+					return '<span class="badge badge-xs badge-success">Lengkap</span>';
+				}
+			});
+
+			$table->editColumn('id', function ($row) {
+				return $row->id ? $row->id : '';
+			});
+			$table->editColumn('nama_kelompok', function ($row) {
+				return $row->nama_kelompok ? $row->nama_kelompok : '';
+			});
+			$table->editColumn('nama_lokasi', function ($row) {
+				return $row->nama_lokasi ? $row->nama_lokasi : '';
+			});
+			$table->editColumn('anggota_id', function ($row) {
+				return $row->anggota_id ? $row->anggota_id : '';
+			});
+			$table->editColumn('nama_petani', function ($row) {
+				return $row->nama_petani ? $row->nama_petani : '';
+			});
+			$table->editColumn('luas_tanam', function ($row) {
+				return $row->luas_tanam ? $row->luas_tanam : '';
+			});
+			$table->editColumn('volume', function ($row) {
+				return $row->volume ? $row->volume : '';
+			});
+
+			$table->rawColumns(['data_geolokasi']);
+
+			return $table->make(true);
+		}
+
+		// dd($row->data_geolokasi);
+		return view('admin.pengajuan.veriftanam.create', compact('module_name', 'page_title', 'page_heading', 'heading_class', 'commitment', 'total_luastanam', 'total_volume', 'pks', 'countPoktan', 'countPks'));
+	}
+
+
+	public function store(Request $request, $id)
+	{
+		$commitment = PullRiph::findOrFail($id);
+
+		// Find AjuVerifProduksi where no_ijin is $commitment->no_ijin.
+		$ajuVerifTanam = AjuVerifTanam::where('no_ijin', $commitment->no_ijin)->first();
+
+		if ($ajuVerifTanam && $ajuVerifTanam->status === '10') {
+			session()->flash('message', 'SKL telah terbit. Anda tidak dapat membuat pengajuan verifikasi kembali untuk RIPH ini.');
+			return redirect()->back();
+		}
+
+		// Continue with creating or updating ajuVerifTanam.
+		AjuVerifTanam::updateOrCreate(
+			[
+				'npwp' => $commitment->npwp,
+				'commitment_id' => $commitment->id,
+				'no_ijin' => $commitment->no_ijin,
+			],
+			[
+				'status' => '1',
+			]
+		);
+
+		return redirect()->route('admin.task.pengajuan.index', $id)
+			->with('success', 'Pengajuan verifikasi tanam berhasil dibuat.');
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id)
+	{
+		//
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id)
+	{
+		//
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id)
+	{
+		//
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id)
+	{
+		//
+	}
+}

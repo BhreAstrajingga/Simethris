@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Simethris Sample</name>
+	<description>Contoh lokasi simethris</description>
+	<gx:CascadingStyle kml:id="__managed_style_0AACED75FF285DCEB3B1">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.26.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_1961F4030C285DCEB3B0">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.26.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_0D93CAD57D285DCEB3B0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_1961F4030C285DCEB3B0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_0AACED75FF285DCEB3B1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_29CBA2615D285DCD470B">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<displayMode>hide</displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_1E7B2D715F285DCD470B">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<displayMode>hide</displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_03790CE427285DCD470B">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_1E7B2D715F285DCD470B</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_29CBA2615D285DCD470B</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark id="019C0885CA285DCCC23D">
+		<name>Lokasi Lahan 1</name>
+		<styleUrl>#__managed_style_03790CE427285DCD470B</styleUrl>
+		<Point>
+			<coordinates>109.9279562228101,-7.370791995806249,771.4801232002881</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0F567E2D10285DCE6420">
+		<name>Lahan Tanam 1</name>
+		<description><![CDATA[<div>Lahan Tanam milik A<br></div>]]></description>
+		<LookAt>
+			<longitude>109.9281670734106</longitude>
+			<latitude>-7.370660967032139</latitude>
+			<altitude>772.0855383486501</altitude>
+			<heading>3.351892807604762</heading>
+			<tilt>0</tilt>
+			<gx:fovy>34.99999557340228</gx:fovy>
+			<range>183.9833317546618</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0D93CAD57D285DCEB3B0</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						109.9278863248987,-7.370396557145029,771.1880820731932 109.9278936612392,-7.370455731264302,770.5103369384192 109.9279211841055,-7.370530682607327,770.7583037809876 109.9278698670631,-7.37060668151743,770.6568341862295 109.9278355620395,-7.370647943656803,770.5267176190584 109.9277959399861,-7.370693515547517,770.1690862112681 109.927784058062,-7.370739231066204,770.1215342383939 109.9277918332919,-7.370793382552525,770.3250596440599 109.9278063271124,-7.370852573567288,770.2923564036107 109.9278275973412,-7.37089875455185,770.2398533834419 109.9278245754234,-7.370919740670429,770.1023685451113 109.9277982066009,-7.370944296804425,769.7340892146321 109.9278267822141,-7.370953121135347,769.9263427259085 109.9278917426798,-7.370958076086803,770.1177985339287 109.9279354411903,-7.370960522644012,770.1803645083564 109.9279700817415,-7.370938402378189,770.3057347420025 109.9280207934952,-7.370899254639476,770.484251510886 109.9280514721845,-7.370890508615997,770.548903102862 109.9280924150321,-7.370885455941585,770.5397793421629 109.9281330447197,-7.370860797106143,770.679803944032 109.9281783592802,-7.370831868578801,770.9364130377655 109.9282108516787,-7.370815897501644,770.9373705156557 109.9282818615195,-7.370789102219581,770.4841456584049 109.928359085873,-7.370756278544311,770.5089773721854 109.9284046059389,-7.370723082810755,770.5968058052697 109.9284579133011,-7.37071428070009,770.5331272325111 109.9285151172626,-7.370725179577607,770.2195804759799 109.9285795752511,-7.370740997328092,769.9957036555246 109.9286527683345,-7.370716702022222,770.7832188897058 109.9286963015025,-7.370677690809377,772.9747400318715 109.9287323055365,-7.370631657688218,774.1150512584938 109.9286612412751,-7.370635948358039,773.1279163383857 109.9285805071333,-7.370620937008559,773.1623913099528 109.9285656992391,-7.370630282091272,772.9192142277858 109.9284975957628,-7.370627757796785,772.9027367257808 109.9284093315861,-7.370607963885833,773.1609711331084 109.9282854308391,-7.370594924382601,773.3981330524796 109.9282219679976,-7.370592602755715,773.2326847460855 109.9281618410696,-7.370606544806444,772.7077006520321 109.9280982023047,-7.370527694907806,772.7820376922685 109.9280796334494,-7.370471275448187,773.3820097515552 109.9280584687862,-7.370455521212613,773.5237584618185 109.9280355638364,-7.370397413494933,773.8153093398709 109.9279612429831,-7.370323567100856,773.4720986994134 109.9278999127705,-7.37026295510015,773.5644082477409 109.9278524025477,-7.370304973337188,772.4993573882182 109.9278863248987,-7.370396557145029,771.1880820731932 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>
